@@ -142,6 +142,12 @@ namespace FLYINGCOLLECTION_NAMESPACE
             return true;
         }
 
+/**
+ * @brief close the current json string and append it to the collection
+ * 
+ * @return true 
+ * @return false 
+ */
         bool flush()
         {
             if (o_currentjsonstream->tellp() > 1)

@@ -22,7 +22,7 @@ int main()
 {
 
     std::cout << "json serialization by value, sizelimit=50" << std::endl;
-    JsonStream<50> jss;
+    JsonStream<30> jss;
     jss.add<uint16_t>("k1", 25);
     jss.add<uint16_t>("k2", 3);
     jss.add<float>("k3", 255.4546);
@@ -35,11 +35,12 @@ int main()
     for (const std::string &json : vecres)
         std::cout<<"part "<<i++<<" = " << json << std::endl;
 
-    std::unique_ptr<JsonStream<50>> jsref = std::make_unique<JsonStream<50>>();
-    std::cout << "json serialization byref, sizelimit=25" << std::endl;
+    std::unique_ptr<JsonStream<80>> jsref = std::make_unique<JsonStream<80>>();
+    std::cout << "json serialization byref, sizelimit=80, use of partial flushs" << std::endl;
     jsref->add("k1", 25);
     jsref->add<std::string>("k2", "36");
-    const char * cs="365";
+    jsref->flush();
+    const char *cs = "365";
     jsref->add("k5", cs);
     bool b = true;
     jsref->add("kbool", b);
