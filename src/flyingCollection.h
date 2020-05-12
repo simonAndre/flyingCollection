@@ -14,7 +14,7 @@ namespace flyingCollection
     using FLYINGCOLLECTION_NAMESPACE::SanPair;
 } // namespace flyingCollection
 
-using namespace flyingCollection;
+// using namespace flyingCollection;
 
 #else
 
