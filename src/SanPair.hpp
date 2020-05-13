@@ -19,7 +19,7 @@ namespace FLYINGCOLLECTION_NAMESPACE
         uint16_t forcastedjsonsize();
     };
 
-    void prependStream(std::ostream &os, const std::string &key)
+    inline void prependStream(std::ostream &os, const std::string &key)
     {
         if (os.tellp() == 0)
             os << '{';
@@ -29,7 +29,7 @@ namespace FLYINGCOLLECTION_NAMESPACE
     }
 
     template <typename V>
-    std::ostream &operator<<(std::ostream &os, const SanPair<V> &pkv)
+    inline std::ostream &operator<<(std::ostream &os, const SanPair<V> &pkv)
     {
         prependStream(os, pkv.first);
         os << pkv.second;
@@ -37,14 +37,14 @@ namespace FLYINGCOLLECTION_NAMESPACE
     }
 
     template <>
-    std::ostream &operator<<(std::ostream &os, const SanPair<std::string> &pkv)
+    inline std::ostream &operator<<(std::ostream &os, const SanPair<std::string> &pkv)
     {
         prependStream(os, pkv.first);
         os << '\'' << pkv.second << '\'';
         return os;
     }
     template <>
-    std::ostream &operator<<(std::ostream &os, const SanPair<const char *> &pkv)
+    inline std::ostream &operator<<(std::ostream &os, const SanPair<const char *> &pkv)
     {
         prependStream(os, pkv.first);
         os << '\'' << pkv.second << '\'';
@@ -52,7 +52,7 @@ namespace FLYINGCOLLECTION_NAMESPACE
     }
 
     template <typename T>
-    uint16_t baseforcastedjsonsize(SanPair<T> *sp)
+    inline uint16_t baseforcastedjsonsize(SanPair<T> *sp)
     {
         std::ostringstream oss;
         oss << sp->second;
@@ -62,18 +62,18 @@ namespace FLYINGCOLLECTION_NAMESPACE
     }
 
     template <typename V>
-    uint16_t SanPair<V>::forcastedjsonsize()
+    inline uint16_t SanPair<V>::forcastedjsonsize()
     {
         return baseforcastedjsonsize(this);
     }
 
     template <>
-    uint16_t SanPair<const char *>::forcastedjsonsize()
+    inline uint16_t SanPair<const char *>::forcastedjsonsize()
     {
         return baseforcastedjsonsize(this) + 2;
     }
     template <>
-    uint16_t SanPair<std::string>::forcastedjsonsize()
+    inline uint16_t SanPair<std::string>::forcastedjsonsize()
     {
         return baseforcastedjsonsize(this) + 2;
     }
