@@ -52,7 +52,7 @@ int main()
 
     const char *inputstr = "key1:12;key2:2k.22225;key3:FjfB3V;key4:45.67;keybool1:1;keybool2:0;keybool3:y;keybool4:1";
     std::cout << "\n\njson parsing, in string : " << inputstr << std::endl;
-    SanCodedStr sancstr("key1:12;key2:2k.22225;key3:FjfB3V;key4:45.67;keybool1:1;keybool2:0;keybool3:y;keybool4:1");
+    SanCodedStr sancstr(inputstr);
 
     //streaming
     std::ostringstream oss;
@@ -80,8 +80,8 @@ int main()
     std::cout << "\ndirect extraction:\n";
     printkey<int>(sancstr, "key1");
     printkey<uint16_t>(sancstr, "key1");
-    printkey<std::string>(sancstr, "key2");
-    printkey<std::string>(sancstr, "key3");
+    printkey<const char *>(sancstr, "key2");
+    printkey<const char *>(sancstr, "key3");
     printkey<float>(sancstr, "key2");
     printkey<float>(sancstr, "key3");
     printkey<float>(sancstr, "key4");

@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <sstream>
+#include "SanPair.hpp"
 
 namespace FLYINGCOLLECTION_NAMESPACE
 {
@@ -25,15 +27,21 @@ namespace FLYINGCOLLECTION_NAMESPACE
             delete o_currentjsonstream;
         }
 
-        std::vector<std::string> getJsons();
+        std::vector<std::string> getJsons()
+        {
+            this->flush();
+            return this->jsoncollection;
+        }
 
         /**
      * @brief number of json strings holded by the collection
      * 
      * @return uint16_t 
      */
-        uint16_t size();
-
+        uint16_t size()
+        {
+            return jsoncollection.size();
+        }
 
         /**
  * @brief add the key/value pair to the json stream
@@ -65,6 +73,13 @@ namespace FLYINGCOLLECTION_NAMESPACE
          * @return true 
          * @return false 
          */
-        bool flush();
+        bool flush()
+        {
+            if (o_currentjsonstream->tellp() > 1)
+                *o_currentjsonstream << '}';
+            jsoncollection.emplace_back(o_currentjsonstream->str());
+            o_currentjsonstream = new std::ostringstream();
+            return true;
+        }
     };
 } // namespace FLYINGCOLLECTION_NAMESPACE

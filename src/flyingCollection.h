@@ -15,3 +15,10 @@
 #error flyingCollection requires a C++ compiler, please change file extension to .cc or .cpp
 
 #endif
+
+namespace flyingCollection
+{
+    using FLYINGCOLLECTION_NAMESPACE::JsonStream;
+    using FLYINGCOLLECTION_NAMESPACE::SanCodedStr;
+    using FLYINGCOLLECTION_NAMESPACE::SanPair;
+} // namespace flyingCollection

@@ -11,23 +11,24 @@ namespace FLYINGCOLLECTION_NAMESPACE
         std::string _codedstring;
 
         template <typename T>
-        bool extractKV(std::string const &kvpair, SanPair<T> &sanpair)
-        {
-            std::istringstream ss_kvpair(kvpair);
-            std::getline(ss_kvpair, sanpair.first, ':') >> sanpair.second;
-            std::string last;
-            bool res = !ss_kvpair.fail();
-            if (std::getline(ss_kvpair, last, ':'))
-                return false;
-            return res;
-        }
+        bool extractKV(std::string const &kvpair, SanPair<T> &sanpair);
+        // {
+        //     std::istringstream ss_kvpair(kvpair);
+        //     std::getline(ss_kvpair, sanpair.first, ':') >> sanpair.second;
+        //     std::string last;
+        //     bool res = !ss_kvpair.fail();
+        //     if (std::getline(ss_kvpair, last, ':'))
+        //         return false;
+        //     return res;
+        // }
+
 
     public:
         SanCodedStr(const char *codedstring)
         {
             _codedstring = std::string(codedstring);
         }
-        ~SanCodedStr();
+        ~SanCodedStr(){}
 
         std::string getCodedString()
         {
@@ -91,4 +92,31 @@ namespace FLYINGCOLLECTION_NAMESPACE
             return true;
         }
     };
+
+   
+    template <typename T>
+    bool SanCodedStr::extractKV(std::string const &kvpair, SanPair<T> &sanpair)
+    {
+        std::istringstream ss_kvpair(kvpair);
+        std::getline(ss_kvpair, sanpair.first, ':') >> sanpair.second;
+        std::string last;
+        bool res = !ss_kvpair.fail();
+        if (std::getline(ss_kvpair, last, ':'))
+            return false;
+        return res;
+    }
+    template <>
+    bool SanCodedStr::extractKV(std::string const &kvpair, SanPair<const char *> &sanpair)
+    {
+        std::istringstream ss_kvpair(kvpair);
+        std::string secondstr;
+        std::getline(ss_kvpair, sanpair.first, ':') >> secondstr;
+        sanpair.second = secondstr.c_str();
+        std::string last;
+        bool res = !ss_kvpair.fail();
+        if (std::getline(ss_kvpair, last, ':'))
+            return false;
+        return res;
+    }
+
 } // namespace FLYINGCOLLECTION_NAMESPACE
